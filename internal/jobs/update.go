@@ -3,6 +3,7 @@ package jobs
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
@@ -61,6 +62,10 @@ func updateStation(station string) {
 //UpdateInfo updates all information
 func UpdateInfo() {
 	for _, station := range constants.Stations {
-		go updateStation(station)
+		updateStation(station)
+
+		if os.Getenv("DEV") == "true" {
+			break
+		}
 	}
 }

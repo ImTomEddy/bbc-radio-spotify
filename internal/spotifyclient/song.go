@@ -2,6 +2,7 @@ package spotifyclient
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/zmb3/spotify"
 )
@@ -28,7 +29,8 @@ func AddSongToPlaylist(playlist spotify.ID, songName string, station string) err
 	}
 
 	mostRecentSongs[station] = song.ID.String()
-	Client.AddTracksToPlaylist(playlist, (*result.Tracks).Tracks[0].ID)
+	Client.AddTracksToPlaylist(playlist, song.ID)
 
+	log.Printf("Added song %s to playlist %s for station %s", song.ID, playlist, station)
 	return nil
 }

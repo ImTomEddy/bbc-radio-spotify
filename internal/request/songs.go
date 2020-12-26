@@ -30,7 +30,7 @@ func GetLatestSong(station string) (*structures.Title, error) {
 	}
 
 	if len(jsonBody.Data) != 1 {
-		return nil, fmt.Errorf("Recieved %d values, expected 1 - for station %s", len(jsonBody.Data), station)
+		return nil, fmt.Errorf("Recieved %d values for the song, expected 1 - for station %s", len(jsonBody.Data), station)
 	}
 
 	return &jsonBody.Data[0].Song, nil
