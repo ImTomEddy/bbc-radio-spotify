@@ -12,3 +12,5 @@
 !.vscode/extensions.json
 *.code-workspace
 .history/
+.env
+env.sh

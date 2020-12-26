@@ -6,6 +6,7 @@ import (
 
 	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
 	"github.com/imtomeddy/bbc-radio-spotify/internal/structures"
+	"github.com/pkg/errors"
 )
 
 //GetLatestSong gets the latest song played by the specified radio station
@@ -13,7 +14,7 @@ func GetLatestSong(station string) (*structures.Title, error) {
 	body, err := MakeGetRequest(fmt.Sprintf(constants.SongRequestURI, station))
 
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Error getting song for station "+station)
 	}
 
 	var jsonBody struct {
@@ -29,7 +30,7 @@ func GetLatestSong(station string) (*structures.Title, error) {
 	}
 
 	if len(jsonBody.Data) != 1 {
-		return nil, fmt.Errorf("Recieved %d values, expected 1", len(jsonBody.Data))
+		return nil, fmt.Errorf("Recieved %d values, expected 1 - for station %s", len(jsonBody.Data), station)
 	}
 
 	return &jsonBody.Data[0].Song, nil

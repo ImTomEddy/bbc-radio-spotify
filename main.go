@@ -5,16 +5,16 @@ import (
 
 	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
 	"github.com/imtomeddy/bbc-radio-spotify/internal/jobs"
-	"github.com/robfig/cron/v3"
+	"github.com/imtomeddy/bbc-radio-spotify/internal/spotifyclient"
 )
 
 func main() {
+	spotifyclient.RequestAuthentication()
+
 	log.Println("Starting BBC Radio to Spotify Service")
 	log.Printf("Supported Radio Stations: (%d) %s", len(constants.Stations), constants.Stations)
 
-	c := cron.New()
-	c.AddFunc("* * * * *", jobs.UpdateInfo)
-	c.Start()
+	jobs.SetupJobs()
 
 	select {}
 }

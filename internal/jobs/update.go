@@ -1,10 +1,13 @@
 package jobs
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
 	"github.com/imtomeddy/bbc-radio-spotify/internal/request"
+	"github.com/imtomeddy/bbc-radio-spotify/internal/spotifyclient"
 	"github.com/imtomeddy/bbc-radio-spotify/internal/structures"
 )
 
@@ -39,13 +42,24 @@ func updateStation(station string) {
 		Broadcast: *broadcast,
 	}
 
-	log.Println(data)
+	playlistName := fmt.Sprintf("%s %s | %s | %s", data.Broadcast.Title.Primary, data.Broadcast.Title.Secondary, constants.StationNames[station], time.Now().Format("02/01/2006"))
+	playlistDesc := "Playlist generated using bbc-radio-spotify (https://github.com/imtomeddy/bbc-radio-spotify). Boradcast ID: " + data.Broadcast.ID
+
+	playlistRef, err := spotifyclient.GetPlaylist(station, playlistName, playlistDesc)
+	playlist := *playlistRef
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	songName := data.Song.Primary + " " + data.Song.Secondary
+
+	spotifyclient.AddSongToPlaylist(playlist.ID, songName, station)
 }
 
 //UpdateInfo updates all information
 func UpdateInfo() {
-	log.Printf("Updating information for %d stations", len(constants.Stations))
-
 	for _, station := range constants.Stations {
 		go updateStation(station)
 	}
