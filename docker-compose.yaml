@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  bbc-radio-spotify:
+    image: imtomeddy/bbc-radio-spotify
+    environment: 
+      - SPOTIFY_CLIENT_ID={{}}
+      - SPOTIFY_CLIENT_SECRET={{}}
+      - SPOTIFY_REDIRECT_URI=http://localhost:8081
+      - SPOTIFY_USER_ID={{}}
+    ports: 
+      - "8081:8081"

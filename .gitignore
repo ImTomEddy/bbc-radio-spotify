@@ -14,3 +14,4 @@
 .history/
 .env
 env.sh
+docker-compose-secret.yaml
