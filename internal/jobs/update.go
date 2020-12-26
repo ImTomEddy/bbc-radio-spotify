@@ -44,7 +44,7 @@ func updateStation(station string) {
 	}
 
 	playlistName := fmt.Sprintf("%s %s | %s | %s", data.Broadcast.Title.Primary, data.Broadcast.Title.Secondary, constants.StationNames[station], time.Now().Format("02/01/2006"))
-	playlistDesc := "Playlist generated using bbc-radio-spotify (https://github.com/imtomeddy/bbc-radio-spotify). Boradcast ID: " + data.Broadcast.ID
+	playlistDesc := "Playlist generated using bbc-radio-spotify (https://github.com/imtomeddy/bbc-radio-spotify). Broadcast ID: " + data.Broadcast.ID
 
 	playlistRef, err := spotifyclient.GetPlaylist(station, playlistName, playlistDesc)
 	playlist := *playlistRef
