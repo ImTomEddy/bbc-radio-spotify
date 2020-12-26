@@ -1,16 +1,16 @@
-package broadcasts
+package request
 
 import (
-	"bbc-radio-spotify/internal/constants"
-	"bbc-radio-spotify/internal/request"
-	"bbc-radio-spotify/internal/structures"
 	"encoding/json"
 	"fmt"
+
+	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
+	"github.com/imtomeddy/bbc-radio-spotify/internal/structures"
 )
 
 //GetLatestBroadcast gets the latest broadcast by the specified radio station
 func GetLatestBroadcast(station string) (*structures.Broadcast, error) {
-	body, err := request.MakeGetRequest(fmt.Sprintf(constants.BroadcastRequestURI, station))
+	body, err := MakeGetRequest(fmt.Sprintf(constants.BroadcastRequestURI, station))
 
 	if err != nil {
 		return nil, err
