@@ -11,7 +11,6 @@ var mostRecentSongs map[string]string = make(map[string]string)
 
 //AddSongToPlaylist tries to add the song to a playlist, as long as it's not a duplicate
 func AddSongToPlaylist(playlist spotify.ID, songName string, station string) error {
-
 	result, err := Client.Search(songName, spotify.SearchTypeTrack)
 
 	if err != nil {
