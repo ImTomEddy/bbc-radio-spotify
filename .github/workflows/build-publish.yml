@@ -14,10 +14,10 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           repository: imtomeddy/bbc-radio-spotify/bbc-radio-spotify
-          tag_with_ref: true
+          tags: imtomeddy/bbc-radio-spotify:latest,imtomeddy/bbc-radio-spotify:$(git rev-parse --short HEAD)
