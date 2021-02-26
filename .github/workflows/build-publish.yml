@@ -16,6 +16,4 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: imtomeddy/bbc-radio-spotify/bbc-radio-spotify
-          tags: imtomeddy/bbc-radio-spotify:latest
+          tags: docker.pkg.github.com/imtomeddy/bbc-radio-spotify:latest
