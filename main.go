@@ -2,19 +2,33 @@ package main
 
 import (
 	"log"
+	"net/http"
+	"os"
 
-	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
-	"github.com/imtomeddy/bbc-radio-spotify/internal/jobs"
-	"github.com/imtomeddy/bbc-radio-spotify/internal/spotifyclient"
+	"github.com/imtomeddy/bbc-radio-spotify/internal/sounds"
+	"github.com/imtomeddy/bbc-radio-spotify/internal/spotify"
 )
 
 func main() {
-	spotifyclient.RequestAuthentication()
+	err := spotify.Authenticate()
+
+	if err != nil {
+		panic(err)
+	}
+
+	p, err := spotify.GetOrCreatePlaylist("!!== TEST ==!!", "Test playlist please ignore")
+
+	log.Println(p)
 
 	log.Println("Starting BBC Radio to Spotify Service")
-	log.Printf("Supported Radio Stations: (%d) %s", len(constants.Stations), constants.Stations)
+	log.Printf("Supported Radio Stations: (%d) %s", len(sounds.Stations), sounds.Stations)
 
-	jobs.SetupJobs()
+	m := http.NewServeMux()
+	m.HandleFunc("/", triggerHandler)
 
-	select {}
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
+}
+
+func triggerHandler(w http.ResponseWriter, r *http.Request) {
+	// jobs.Update()
 }

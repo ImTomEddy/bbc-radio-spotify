@@ -1,12 +1,12 @@
-package request
+package sounds
 
 import (
 	"io/ioutil"
 	"net/http"
 )
 
-// MakeGetRequest makes a HTTP Get request and returns the content as a byte slice
-func MakeGetRequest(requestURI string) ([]byte, error) {
+// makeGetRequest makes a HTTP Get request and returns the content as a byte slice
+func makeGetRequest(requestURI string) ([]byte, error) {
 	response, err := http.Get(requestURI)
 
 	if err != nil {

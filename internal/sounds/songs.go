@@ -1,17 +1,17 @@
-package request
+package sounds
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/imtomeddy/bbc-radio-spotify/internal/constants"
-	"github.com/imtomeddy/bbc-radio-spotify/internal/structures"
 	"github.com/pkg/errors"
 )
 
+const songRequestURI = "https://rms.api.bbc.co.uk/v2/services/%s/segments/latest?experience=domestic&offset=0&limit=1"
+
 //GetLatestSong gets the latest song played by the specified radio station
-func GetLatestSong(station string) (*structures.Title, error) {
-	body, err := MakeGetRequest(fmt.Sprintf(constants.SongRequestURI, station))
+func GetLatestSong(station string) (*Title, error) {
+	body, err := makeGetRequest(fmt.Sprintf(songRequestURI, station))
 
 	if err != nil {
 		return nil, errors.Wrap(err, "Error getting song for station "+station)
@@ -19,7 +19,7 @@ func GetLatestSong(station string) (*structures.Title, error) {
 
 	var jsonBody struct {
 		Data []struct {
-			Song structures.Title `json:"titles"`
+			Song Title `json:"titles"`
 		} `json:"data"`
 	}
 
